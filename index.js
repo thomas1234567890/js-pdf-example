@@ -1,6 +1,6 @@
 // Import stylesheets
 import './style.css';
-import {toDataURL} from 'convert_image_to_base64.mjs';
+// import {toDataURL} from 'convert_image_to_base64.mjs';
 // import jsPDF from "jspdf";
 // import domtoimage from 'dom-to-image';
 
@@ -22,11 +22,23 @@ import {toDataURL} from 'convert_image_to_base64.mjs';
 //// A4 page (210 x 297 mm) in pixels = (3508 x 2480 px)
 //#region images need to be converted to base64 to work with js-pdf
 ////Test
-// let _image_src = document.getElementById('_qr_image').src;
-// toDataURL(_image_src, (dataUrl)=>{
-// console.log(dataUrl)
-// })
+function toDataURL(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+}
 
+// toDataURL('https://avatars.githubusercontent.com/u/11679069?s=400&u=6fa22fb7fa7bd50a89a5ecd20f2a1cefeeabd32c&v=4', function(dataUrl) {
+//   console.log('RESULT:', dataUrl)
+// })
 //#endregion
 
 
@@ -42,7 +54,8 @@ const _text_color = [255, 255, 255],
 const _company_logo = '',
 const _company_name = 'Kudos Health',
 const _orientation = orientationTypes[0]
-const generate_pdf_function = () => {
+
+const generate_pdf_function = async() => {
   console.clear()
   console.log('click');
   var doc = new jsPDF({ unit: 'px', orientation: `${_orientation}` });
@@ -61,10 +74,19 @@ const generate_pdf_function = () => {
   // doc.setFontSize(_descriptions_size);
   // doc.setTextColor(_text_color[0], _text_color[1], _text_color[2]);
   // doc.text(`${_description}`, 40, 60);
-  
+
+  let _image_src = document.getElementById('_qr_image').src;
+  console.log(_image_src)
+  let dataUrl;
+  await toDataURL(_image_src, (dataUrl)=>{
+  console.log(dataUrl)})  
+
   var img = new Image()
-  img.src= ""
+  img.src= dataUrl;
+  console.log(`dataUrl : ${dataUrl}`)
+  console.log(`image src : ${img.src}`)
   doc.addImage(img, 'JPEG', 100, 100, 100, 100)  
+
 
   // img.src = document.getElementById('_qr_image').src;
   // console.log(img.src)
@@ -100,4 +122,5 @@ const generate_pdf_function = () => {
   document
     .getElementById('btn')
     .addEventListener('click', generate_pdf_function);
+
 })();
