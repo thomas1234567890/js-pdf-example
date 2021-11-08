@@ -1,5 +1,6 @@
 // Import stylesheets
 import './style.css';
+import {toDataURL} from 'convert_image_to_base64.mjs';
 // import jsPDF from "jspdf";
 // import domtoimage from 'dom-to-image';
 
@@ -19,8 +20,17 @@ import './style.css';
 //// js-pdf can only take rgb colors as a number array
 //// all values are literals, number | string
 //// A4 page (210 x 297 mm) in pixels = (3508 x 2480 px)
-const orientationTypes = ['p', 'l'];
+//#region images need to be converted to base64 to work with js-pdf
+////Test
+// let _image_src = document.getElementById('_qr_image').src;
+// toDataURL(_image_src, (dataUrl)=>{
+// console.log(dataUrl)
+// })
 
+//#endregion
+
+
+const orientationTypes = ['p', 'l'];
 const _title = 'Test Title',
 const _title_size = 50,
 const _font_family = 'Ariel',
@@ -53,10 +63,12 @@ const generate_pdf_function = () => {
   // doc.text(`${_description}`, 40, 60);
   
   var img = new Image()
-  img.src = document.getElementById('_qr_image').src;
-  console.log(img.src)
-  doc.addImage(img, 'JPEG', 10, 78, 12, 15)  
+  img.src= ""
+  doc.addImage(img, 'JPEG', 100, 100, 100, 100)  
 
+  // img.src = document.getElementById('_qr_image').src;
+  // console.log(img.src)
+  // doc.addImage(img, 'JPEG', 10, 78, 12, 15)  
   // doc.text(name, 40, 20);
   // doc.setFontSize(30);
   // doc.text(this.titleMC, 40, 60);
