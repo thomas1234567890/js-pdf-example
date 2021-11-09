@@ -63,29 +63,29 @@ const generate_pdf_function = async() => {
   //// both .setFillColor and .rect are required to set background color
   //// fill color is the color,
   //// the rect is a rectangle that is stretched over the page
-  // doc.setFillColor(_fill_color[0],_fill_color[1],_fill_color[2],);
-  // doc.rect(0, 0, 3508, 2480, 'F'); // A4 dimention
+  doc.setFillColor(_fill_color[0],_fill_color[1],_fill_color[2],);
+  doc.rect(0, 0, 3508, 2480, 'F'); // A4 dimention
   doc.setFont(_font_family);
   
-  // doc.setFontSize(_title_size);
-  // doc.setTextColor(_text_color[0], _text_color[1], _text_color[2]);
-  // doc.text(`${_title}`,40, 100);
+  doc.setFontSize(_title_size);
+  doc.setTextColor(_text_color[0], _text_color[1], _text_color[2]);
+  doc.text(`${_title}`,40, 100);
   
-  // doc.setFontSize(_descriptions_size);
-  // doc.setTextColor(_text_color[0], _text_color[1], _text_color[2]);
-  // doc.text(`${_description}`, 40, 60);
+  doc.setFontSize(_descriptions_size);
+  doc.setTextColor(_text_color[0], _text_color[1], _text_color[2]);
+  doc.text(`${_description}`, 40, 60);
 
-  let _image_src = document.getElementById('_qr_image').src;
-  console.log(_image_src)
-  let dataUrl;
-  await toDataURL(_image_src, (dataUrl)=>{
-  console.log(dataUrl)})  
+  // let _image_src = document.getElementById('_qr_image').src;
+  // console.log(_image_src)
+  // let dataUrl;
+  // await toDataURL(_image_src, (dataUrl)=>{
+  // console.log(dataUrl)})  
 
-  var img = new Image()
-  img.src= dataUrl;
-  console.log(`dataUrl : ${dataUrl}`)
-  console.log(`image src : ${img.src}`)
-  doc.addImage(img, 'JPEG', 100, 100, 100, 100)  
+  // var img = new Image()
+  // img.src= dataUrl;
+  // console.log(`dataUrl : ${dataUrl}`)
+  // console.log(`image src : ${img.src}`)
+  // doc.addImage(img, 'JPEG', 100, 100, 100, 100)  
 
 
   // img.src = document.getElementById('_qr_image').src;
