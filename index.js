@@ -57,7 +57,11 @@ const _orientation = orientationTypes[0]
 
 const generate_pdf_function = async() => {
   console.clear()
-  console.log('click');
+  console.log('generate_pdf_function start');
+  // #region temp values
+  let image_src = document.getElementById('_qr_image').src;
+  console.log(`image src: ${image_src}`)
+  // #endregion
   var doc = new jsPDF({ unit: 'px', orientation: `${_orientation}` });
 
   //// both .setFillColor and .rect are required to set background color
